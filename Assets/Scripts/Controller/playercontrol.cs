@@ -14,14 +14,10 @@ public class playercontrol : MonoBehaviour
     [SerializeField] public float jumpSpeed;
 
     private bool onGround = false;
-    private Vector2 lookLeft, lookRight;
 
      void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-
-        lookLeft = new Vector2(-1, 0);
-        lookRight = new Vector2(1, 0);
     }
 
      void FixedUpdate()
@@ -43,8 +39,13 @@ public class playercontrol : MonoBehaviour
 
         jumpInput = Input.GetAxisRaw("Jump");
 
+        float jMove = jumpInput * jumpSpeed * Time.deltaTime;
+
+
         if (onGround)
         {
+            _rb.velocity = new Vector2(hMove, jMove);
+
             if (jumpInput >= 1)
             {
                 onGround = false;
@@ -57,7 +58,6 @@ public class playercontrol : MonoBehaviour
     {
         if (collision.gameObject.name == "BG")
         {
-
             onGround = true;
         }
     }
@@ -66,7 +66,6 @@ public class playercontrol : MonoBehaviour
     {
         if (collision.gameObject.name == "BG")
         {
-
             onGround = false;
         }
     }
