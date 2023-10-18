@@ -40,9 +40,20 @@ public class playercontrol : MonoBehaviour
         {
             gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
+
+        jumpInput = Input.GetAxisRaw("Jump");
+
+        if (onGround)
+        {
+            if (jumpInput >= 1)
+            {
+                onGround = false;
+            }
+        }
+
     }
 
-       private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.name == "BG")
         {
@@ -51,4 +62,12 @@ public class playercontrol : MonoBehaviour
         }
     }
 
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "BG")
+        {
+
+            onGround = false;
+        }
+    }
 }
